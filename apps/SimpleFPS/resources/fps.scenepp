@@ -19,6 +19,16 @@
     </parametricSurface>
   </parametricSurfaces>
 
+  <parametricSurfaces>
+    <parametricSurface name="Sphere"  uResolution="96" vResolution="48">
+      <uRange min="0" max="6.283185307" join="true"/>
+      <vRange min="-0.3" max="0" join="false"/>
+      <param name="R" value="0.005"/>
+      <point  x="R*cos(u)" y="R*sin(u)" z="v"/>
+      <normal x="cos(u)"   y="sin(u)"   z="0"/>
+    </parametricSurface>
+  </parametricSurfaces>
+
   <nodes>
     <node name="Player" >
       <position x="0" y="0" z="1.7" />
@@ -29,7 +39,19 @@
       <node name="Cannon">
         <position x="0" y="-0.05" z="0"/>
         <parametricSurface ref="Cylinder" material="Cannon"/>
+        
+        <node name = "LightNode">
+          <position x="0" y="0" z="-0.3"/>
+          <light name="Flashlight" type="spot" castShadows="false">
+            <colourDiffuse r="1" g="1" b="1"/>
+            <colourSpecular r="0.5" g="0.5" b="0.5"/>      
+            <lightRange inner="0.12" outer="0.35" falloff="0.5"/>
+            <lightAttenuation range="30" constant="1" linear="0" quadratic="0.01"/>
+          </light>
+        </node>
+
       </node>
+
 
     </node>
 
@@ -99,7 +121,7 @@
           xSegments="20" ySegments="20" numTexCoordSets="1"
           uTile="4" vTile="4" hasNormals="true" material="Wall"
           >
-        <normal x="0" y="0" z="-1"/>
+        <normal x="0" y="0" z="1"/>
         <upVector x="1" y="0" z="0"/>
       </plane>
       <userData>
@@ -114,7 +136,7 @@
           xSegments="20" ySegments="20" numTexCoordSets="1"
           uTile="4" vTile="4" hasNormals="true" material="Wall"
           >
-        <normal x="0" y="0" z="1"/>
+        <normal x="0" y="0" z="-1"/>
         <upVector x="-1" y="0" z="0"/>
       </plane>
       <userData>
