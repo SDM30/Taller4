@@ -6,7 +6,7 @@
   </userData>
 
   <environment>
-    <colourAmbient r="0.9" g="0.9" b="0.9"/>
+    <colourAmbient r="0.4" g="0.4" b="0.4"/>
   </environment>
 
   <parametricSurfaces>
@@ -17,19 +17,33 @@
       <point  x="R*cos(u)" y="R*sin(u)" z="v"/>
       <normal x="cos(u)"   y="sin(u)"   z="0"/>
     </parametricSurface>
-  </parametricSurfaces>
 
-  <parametricSurfaces>
-    <parametricSurface name="Sphere"  uResolution="96" vResolution="48">
-      <uRange min="0" max="6.283185307" join="true"/>
-      <vRange min="-0.3" max="0" join="false"/>
-      <param name="R" value="0.005"/>
-      <point  x="R*cos(u)" y="R*sin(u)" z="v"/>
-      <normal x="cos(u)"   y="sin(u)"   z="0"/>
+    <parametricSurface name="Sphere" uResolution="96" vResolution="48">
+      <uRange min="0" max="3.141592654" join="false"/>
+      <vRange min="0" max="6.283185307" join="true"/>
+      <param name="R" value="0.1"/>
+      <point  x="R*sin(u)*cos(v)" y="R*sin(u)*sin(v)" z="R*cos(u)"/>
+      <normal x="sin(u)*cos(v)"   y="sin(u)*sin(v)"   z="cos(u)"/>
     </parametricSurface>
   </parametricSurfaces>
 
+
   <nodes>
+    <node name="CannonBall">
+      <position x="0.5" y="1.0" z="-3"/>
+      <parametricSurface ref="Sphere" material="Cannon"/>
+      <userData>
+        <property name="collider" type="string" data="sphere"/>
+        <property name="mass" type="float" data="1"/>
+        <property name="restitution" type="float" data="0.8"/>
+        <property name="friction" type="float" data="0.6"/>
+        <property name="rolling_friction" type="float" data="0.01"/>
+        <property name="spinning_friction" type="float" data="0.1"/>
+        <property name="linear_damping" type="float" data="0.05"/>
+        <property name="angular_damping" type="float" data="0.1"/>
+      </userData>
+    </node>
+
     <node name="Player" >
       <position x="0" y="0" z="1.7" />
       <camera fov="0.785398163" name="Player" projectionType="perspective" >
