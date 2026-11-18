@@ -21,7 +21,7 @@
     <parametricSurface name="Sphere" uResolution="96" vResolution="48">
       <uRange min="0" max="3.141592654" join="false"/>
       <vRange min="0" max="6.283185307" join="true"/>
-      <param name="R" value="0.02"/>
+      <param name="R" value="0.1"/>
       <point  x="R*sin(u)*cos(v)" y="R*sin(u)*sin(v)" z="R*cos(u)"/>
       <normal x="sin(u)*cos(v)"   y="sin(u)*sin(v)"   z="cos(u)"/>
     </parametricSurface>

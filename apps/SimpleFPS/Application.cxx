@@ -122,7 +122,7 @@ mouseReleased( const OgreBites::MouseButtonEvent& evt )
     // Tiempo presionado y rapidez resultante
     float seconds = this->m_ClickTimer.getMilliseconds( ) / 1000.0f;
     const float speedMin = 3;
-    const float speedMax = 25;
+    const float speedMax = 10;
     const float factor = 8;
     float speed = std::min( speedMin + seconds * factor, speedMax );
 
