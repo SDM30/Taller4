@@ -4,6 +4,7 @@
 
 #include "Application.h"
 
+#include <algorithm>
 #include <filesystem>
 #include <queue>
 #include <sstream>
@@ -76,10 +77,36 @@ bool Application::keyPressed(const OgreBites::KeyboardEvent &evt) {
 // -------------------------------------------------------------------------
 bool Application::mousePressed(const OgreBites::MouseButtonEvent &evt) {
   if (evt.button == OgreBites::BUTTON_LEFT) {
+    // Start measuring how long the button is held
+    this->m_ClickTimer.reset();
+    this->m_Charging = true;
+    return (true);
+  } else
+    return (false);
+}
+
+// -------------------------------------------------------------------------
+bool Application::mouseReleased(const OgreBites::MouseButtonEvent &evt) {
+  if (evt.button == OgreBites::BUTTON_LEFT && this->m_Charging) {
+    this->m_Charging = false;
+
+    // Seconds the button was held -> shot speed (clamped to a maximum)
+    const float seconds = this->m_ClickTimer.getMilliseconds() / 1000.0f;
+    const float speedMin = 5.0f;
+    const float speedMax = 50.0f;
+    const float speedPerSecond = 20.0f;
+    const float speed =
+        std::min(speedMin + seconds * speedPerSecond, speedMax);
+
+    // The ball leaves from the cannon's muzzle, along the aiming direction
+    const float muzzleDistance = 0.3f;
     Ogre::Vector3 dir = this->m_CameraMan->getAimDirection();
-    Ogre::Vector3 pos =
-        this->m_CameraMan->getHeadNode()->_getDerivedPosition() + dir * 0.5f;
-    this->m_Model.shoot("CannonBall", pos, dir, 50.0f);
+    Ogre::Vector3 cannonPosition = this->getRoot()
+                                       ->getSceneManager("scnMgr")
+                                       ->getSceneNode("Cannon")
+                                       ->_getDerivedPosition();
+    this->m_Model.shoot("CannonBall", cannonPosition + dir * muzzleDistance,
+                        dir, speed);
     return (true);
   } else
     return (false);
