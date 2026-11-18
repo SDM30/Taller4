@@ -103,32 +103,61 @@ mousePressed( const OgreBites::MouseButtonEvent& evt )
 {
   if( evt.button == OgreBites::BUTTON_LEFT )
   {
-    Ogre::Vector3 pos
+    this->m_ClickTimer.reset( );
+    this->m_Charging = true;
+    return( true );
+  }
+  else
+    return( false );
+}
+
+// -------------------------------------------------------------------------
+bool Application::
+mouseReleased( const OgreBites::MouseButtonEvent& evt )
+{
+  if( evt.button == OgreBites::BUTTON_LEFT )
+  {
+    this->m_Charging = false;
+
+    // Tiempo presionado y rapidez resultante
+    float seconds = this->m_ClickTimer.getMilliseconds( ) / 1000.0f;
+    const float speedMin = 3;
+    const float speedMax = 25;
+    const float factor = 8;
+    float speed = std::min( speedMin + seconds * factor, speedMax );
+
+    Ogre::Vector3 cannonPos
       =
-      this->m_CameraMan->getBodyNode( )->_getDerivedPosition( );
+      this->getRoot( )->getSceneManager( "scnMgr" )->getSceneNode( "Cannon" )->_getDerivedPosition( );
     Ogre::Vector3 dir
       =
-      this->m_CameraMan->getBodyNode( )->_getDerivedOrientation( )
+      this->m_CameraMan->getHeadNode( )->_getDerivedOrientation( )
       *
       Ogre::Vector3::NEGATIVE_UNIT_Z;
-    Ogre::Vector3 start = pos + dir * 1;
 
-    // TODO: shoot!
+    const float distance = 0.3;
+    Ogre::Vector3 start = cannonPos + dir * distance;
+
     btRigidBody* cannonBall = this->m_Model.getBody( "CannonBall" );
-
-    if ( cannonBall != nullptr ){
+    if( cannonBall != nullptr )
+    {
       btTransform t;
       t.setIdentity( );
       t.setOrigin( Ogre::Bullet::convert( start ) );
-      cannonBall->setCenterOfMassTransform( t ); 
-      cannonBall->setLinearVelocity( Ogre::Bullet::convert( dir * 10 ) );
+      cannonBall->setCenterOfMassTransform( t );
 
+      cannonBall->clearForces( );
+      cannonBall->setAngularVelocity( btVector3( 0, 0, 0 ) );
       cannonBall->activate( true );
-    }
+      cannonBall->setLinearVelocity( Ogre::Bullet::convert( dir * speed ) );
+    } // end if
 
-    this->m_Model.toggle_simulation( );
+    if( !this->m_SimStarted )
+    {
+      this->m_Model.toggle_simulation( );
+      this->m_SimStarted = true;
+    } // end if
 
-    
     return( true );
   }
   else

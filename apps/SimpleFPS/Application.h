@@ -32,6 +32,7 @@ public:
   // Interactions
   virtual bool keyPressed( const OgreBites::KeyboardEvent& evt ) override;
   virtual bool mousePressed( const OgreBites::MouseButtonEvent& evt ) override;
+  virtual bool mouseReleased( const OgreBites::MouseButtonEvent& evt ) override;
 
   // Animation
   virtual void frameRendered( const Ogre::FrameEvent& evt ) override;
@@ -50,6 +51,9 @@ protected:
   std::string m_ExecutionDir { "" };
   Model m_Model;
   pujOgre::FPSCamera* m_CameraMan { nullptr };
+  Ogre::Timer m_ClickTimer;
+  bool m_Charging { false };
+  bool m_SimStarted { false };
 };
 
 #endif // __SolarSystem__Application__h__
