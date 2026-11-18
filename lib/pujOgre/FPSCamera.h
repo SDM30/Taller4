@@ -25,6 +25,7 @@ namespace pujOgre
     Ogre::SceneNode* getFloor( ) const;
     Ogre::SceneNode* getBodyNode( ) const;
     Ogre::SceneNode* getHeadNode( ) const;
+    Ogre::Vector3 getAimDirection( ) const;
 
     void setEyeHeight( Ogre::Real h );
     void setWalkSpeed( Ogre::Real speed );

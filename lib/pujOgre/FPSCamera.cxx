@@ -108,6 +108,17 @@ getHeadNode( ) const
 }
 
 // -------------------------------------------------------------------------
+Ogre::Vector3 pujOgre::FPSCamera::
+getAimDirection( ) const
+{
+  if( this->m_Head == nullptr )
+    return( Ogre::Vector3::NEGATIVE_UNIT_Z );
+  return(
+    this->m_Head->_getDerivedOrientation( ) * Ogre::Vector3::NEGATIVE_UNIT_Z
+    );
+}
+
+// -------------------------------------------------------------------------
 void pujOgre::FPSCamera::
 setEyeHeight( Ogre::Real h )
 {

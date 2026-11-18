@@ -76,11 +76,9 @@ bool Application::keyPressed(const OgreBites::KeyboardEvent &evt) {
 // -------------------------------------------------------------------------
 bool Application::mousePressed(const OgreBites::MouseButtonEvent &evt) {
   if (evt.button == OgreBites::BUTTON_LEFT) {
-    Ogre::Camera *cam = this->m_CameraMan->getCamera();
-    Ogre::Vector3 dir =
-        cam->getDerivedOrientation() * Ogre::Vector3::NEGATIVE_UNIT_Z;
-    Ogre::Vector3 pos = cam->getDerivedPosition() + dir * 0.5f;
-    // TODO: shoot!
+    Ogre::Vector3 dir = this->m_CameraMan->getAimDirection();
+    Ogre::Vector3 pos =
+        this->m_CameraMan->getHeadNode()->_getDerivedPosition() + dir * 0.5f;
     this->m_Model.shoot("CannonBall", pos, dir, 50.0f);
     return (true);
   } else
