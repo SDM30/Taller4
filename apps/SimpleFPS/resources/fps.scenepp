@@ -35,8 +35,8 @@
       <userData>
         <property name="collider" type="string" data="sphere"/>
         <property name="mass" type="float" data="1"/>
-        <property name="restitution" type="float" data="0.8"/>
-        <property name="friction" type="float" data="0.6"/>
+        <property name="restitution" type="float" data="1.0"/>
+        <property name="friction" type="float" data="0.3"/>
         <property name="rolling_friction" type="float" data="0.01"/>
         <property name="spinning_friction" type="float" data="0.1"/>
         <property name="linear_damping" type="float" data="0.05"/>
