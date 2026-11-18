@@ -57,3 +57,19 @@ material Cannon
         }
     }
 }
+
+
+material hammer.objDefaultMaterial
+{
+    technique
+    {
+        pass
+        {
+            cull_hardware none
+
+            ambient  0.6 0.6 0.6 1
+            diffuse  0.6 0.6 0.6 1
+            specular 0.3 0.3 0.3 32
+        }
+    }
+}

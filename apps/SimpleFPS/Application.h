@@ -7,6 +7,7 @@
 #include <string>
 #include <OgreApplicationContext.h>
 #include <pujOgre/FPSCamera.h>
+#include <vector>
 #include "Model.h"
 
 /**
@@ -52,7 +53,9 @@ protected:
   Model m_Model;
   pujOgre::FPSCamera* m_CameraMan { nullptr };
 
-  // Click duration measurement (shot speed depends on it)
+  std::vector< std::string > m_Projectiles { "CannonBall", "CannonTorus", "CannonHammer"};
+  std::size_t m_CurrentProjectile { 0 };  
+
   Ogre::Timer m_ClickTimer;
   bool m_Charging { false };
 };

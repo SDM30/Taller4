@@ -7,6 +7,7 @@
 #include <algorithm>
 #include <filesystem>
 #include <queue>
+#include <iostream>
 #include <sstream>
 
 #include <Ogre.h>
@@ -70,7 +71,23 @@ bool Application::keyPressed(const OgreBites::KeyboardEvent &evt) {
   if (evt.keysym.sym == OgreBites::SDLK_ESCAPE) {
     this->getRoot()->queueEndRendering();
     return (true);
-  } else
+  } 
+  else if (evt.keysym.sym == '1') { 
+    this->m_CurrentProjectile = 0; 
+    std::cout << "Proyectil: " << this->m_Projectiles[ this->m_CurrentProjectile ] << std::endl;
+    return (true); 
+  }
+  else if (evt.keysym.sym == '2') { 
+    this->m_CurrentProjectile = 1; 
+    std::cout << "Proyectil: " << this->m_Projectiles[ this->m_CurrentProjectile ] << std::endl;
+    return (true); 
+  }
+  else if (evt.keysym.sym == '3') { 
+    this->m_CurrentProjectile = 2; 
+    std::cout << "Proyectil: " << this->m_Projectiles[ this->m_CurrentProjectile ] << std::endl;
+    return (true); 
+  }
+  else
     return (false);
 }
 
@@ -102,8 +119,9 @@ bool Application::mouseReleased(const OgreBites::MouseButtonEvent &evt) {
                                        ->getSceneNode("Cannon")
                                        ->_getDerivedPosition();
 
-    this->m_Model.shoot("CannonBall", cannonPosition + dir * muzzleDistance,
+    this->m_Model.shoot( this->m_Projectiles[ this->m_CurrentProjectile ] , cannonPosition + dir * muzzleDistance,
                         dir, speed);
+            
     return (true);
   } else
     return (false);
