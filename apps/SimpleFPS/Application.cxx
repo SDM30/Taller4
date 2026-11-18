@@ -59,6 +59,12 @@ void Application::setup() {
   this->_configureCamera();
 }
 
+OgreBites::NativeWindowPair Application::createWindow(
+    const Ogre::String& name, uint32_t w, uint32_t h,
+    Ogre::NameValuePairList miscParams) {
+  return this->TContext::createWindow(name, 1280, 720, miscParams);
+}
+
 // -------------------------------------------------------------------------
 void Application::go() {
   this->initApp();

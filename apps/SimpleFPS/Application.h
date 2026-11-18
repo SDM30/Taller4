@@ -29,7 +29,7 @@ public:
   virtual void loadResources( ) override;
   virtual void locateResources( ) override;
   virtual void setup( ) override;
-
+  OgreBites::NativeWindowPair createWindow(const Ogre::String& name, uint32_t w = 0, uint32_t h = 0, Ogre::NameValuePairList miscParams = Ogre::NameValuePairList()) override;
   // Interactions
   virtual bool keyPressed( const OgreBites::KeyboardEvent& evt ) override;
   virtual bool mousePressed( const OgreBites::MouseButtonEvent& evt ) override;
