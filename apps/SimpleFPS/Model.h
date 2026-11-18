@@ -5,6 +5,8 @@
 #define __SolarSystem__Model__h__
 
 #include <memory>
+#include <map>
+#include <string>
 #include <Ogre.h>
 #include <OgreBullet.h>
 
@@ -23,12 +25,14 @@ public:
   
   void build( Ogre::SceneNode* root );
   void update( double t );
+  btRigidBody* getBody( const std::string& node_name ) const;
 
 protected:
   void _configure( Ogre::Entity* e, const Ogre::UserObjectBindings& b );
 
 protected:
   std::unique_ptr< Ogre::Bullet::DynamicsWorld > m_DynWorld;
+  std::map< std::string, btRigidBody*> m_Bodies;
   // std::unique_ptr< Bullet::DebugDrawer > m_DbgDraw;
 
   bool m_Simulating { false };

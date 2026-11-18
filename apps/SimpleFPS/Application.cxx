@@ -111,8 +111,23 @@ mousePressed( const OgreBites::MouseButtonEvent& evt )
       this->m_CameraMan->getBodyNode( )->_getDerivedOrientation( )
       *
       Ogre::Vector3::NEGATIVE_UNIT_Z;
+    Ogre::Vector3 start = pos + dir * 1;
 
     // TODO: shoot!
+    btRigidBody* cannonBall = this->m_Model.getBody( "CannonBall" );
+
+    if ( cannonBall != nullptr ){
+      btTransform t;
+      t.setIdentity( );
+      t.setOrigin( Ogre::Bullet::convert( start ) );
+      cannonBall->setCenterOfMassTransform( t ); 
+      cannonBall->setLinearVelocity( Ogre::Bullet::convert( dir * 10 ) );
+
+      cannonBall->activate( true );
+    }
+
+    this->m_Model.toggle_simulation( );
+
     
     return( true );
   }

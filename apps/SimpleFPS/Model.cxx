@@ -87,6 +87,20 @@ build( Ogre::SceneNode* root )
   this->m_Simulating = false;
 }
 
+
+// -------------------------------------------------------------------------
+btRigidBody* Model::
+getBody( const std::string& node_name ) const
+{
+  auto it = this->m_Bodies.find( node_name );
+  if( it != this->m_Bodies.end( ) ){
+    return( it->second );
+  }
+  else{
+    return( nullptr );
+  }
+}
+
 // -------------------------------------------------------------------------
 void Model::
 update( double t )
@@ -134,6 +148,8 @@ _configure( Ogre::Entity* e, const Ogre::UserObjectBindings& b )
   } // end if
 
   btRigidBody* body = this->m_DynWorld->addRigidBody( mass, e, collider );
+  this->m_Bodies[ e->getParentSceneNode( )->getName( ) ] = body;
+
   body->setRestitution( restitution );
   body->setFriction( friction );
   body->setRollingFriction( rolling_friction );

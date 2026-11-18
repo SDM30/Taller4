@@ -30,7 +30,6 @@
 
   <nodes>
     <node name="CannonBall">
-      <position x="0.5" y="1.0" z="-3"/>
       <parametricSurface ref="Sphere" material="Cannon"/>
       <userData>
         <property name="collider" type="string" data="sphere"/>
